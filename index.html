@@ -224,7 +224,7 @@ footer { text-align:center; color:var(--muted); padding:20px; font-size:.9rem; }
   <p>今日、町で何が起きた？　合計値を使って決めます。</p>
   <div class="roll-controls"><button onclick="rollTable('event')">出来事を振る</button></div>
   <div id="eventResult" class="result">まだ振っていません。</div>
-  <div class="table-wrap"><table><thead><tr><th>2D6合計</th><th>確率</th><th>出来事</th></tr></thead><tbody id="eventTable"></tbody></table></div>
+  <div class="table-wrap"><table><thead><tr><th>2D6合計</th><th>出来事</th></tr></thead><tbody id="eventTable"></tbody></table></div>
 </section>
 
 <section id="cause">
@@ -232,7 +232,7 @@ footer { text-align:center; color:var(--muted); padding:20px; font-size:.9rem; }
   <p>その出来事には、何が隠されている？　原因は必ずしも悪意や大きな陰謀である必要はありません。</p>
   <div class="roll-controls"><button onclick="rollTable('cause')">隠された原因を振る</button></div>
   <div id="causeResult" class="result">まだ振っていません。</div>
-  <div class="table-wrap"><table><thead><tr><th>2D6合計</th><th>確率</th><th>隠された原因</th></tr></thead><tbody id="causeTable"></tbody></table></div>
+  <div class="table-wrap"><table><thead><tr><th>2D6合計</th><th>隠された原因</th></tr></thead><tbody id="causeTable"></tbody></table></div>
 </section>
 
 <section id="resident">
@@ -690,21 +690,27 @@ function copyDiceLog() {
 function buildAllTables(){
   for(let i=0;i<11;i++){
     const sum=i+2;
+
     const tr=document.createElement("tr");
-    tr.innerHTML=`<td>${sum}</td><td>${PROB2D6[sum]}</td><td>${escapeHTML(DATA.event[i])}</td>`;
+    tr.innerHTML=`<td>${sum}</td><td>${escapeHTML(DATA.event[i])}</td>`;
     document.getElementById("eventTable").appendChild(tr);
+
     const tr2=document.createElement("tr");
-    tr2.innerHTML=`<td>${sum}</td><td>${PROB2D6[sum]}</td><td>${escapeHTML(DATA.cause[i])}</td>`;
+    tr2.innerHTML=`<td>${sum}</td><td>${escapeHTML(DATA.cause[i])}</td>`;
     document.getElementById("causeTable").appendChild(tr2);
   }
+
   makeRows(DATA.species,"speciesTable");
+
   ["job","likes","trait","secret"].forEach(key=>{
     makeTable(DATA[key][0],key+"A");
     makeTable(DATA[key][1],key+"B");
   });
+
   ["place","weather"].forEach(key=>{
     ["A","B","C"].forEach((letter,i)=>makeTable(DATA[key][i],key+letter));
   });
+
   ["A","B","C","D","E","F"].forEach((letter,i)=>makeTable(DATA.item[i],"item"+letter));
 }
 

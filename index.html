@@ -155,7 +155,7 @@ footer { text-align:center; color:var(--muted); padding:20px; font-size:.9rem; }
     <li><a href="#place">場所表</a></li>
     <li><a href="#item">道具・品物表</a></li>
     <li><a href="#weather">天気表</a></li>
-    <li><a href="#diceLog">さいころの結果一覧</a></li>
+    <li><a href="#diceLog">サイコロの結果一覧</a></li>
     <li><a href="#template">記録テンプレート</a></li>
     <li><a href="#history">町の歴史・未解決の謎</a></li>
   </ol></nav>
@@ -344,7 +344,7 @@ footer { text-align:center; color:var(--muted); padding:20px; font-size:.9rem; }
 </section>
 
 <section id="diceLog">
-  <h2>13. さいころの結果一覧</h2>
+  <h2>13. サイコロの結果一覧</h2>
   <p>自動で振った項目の結果が、ここに記録されます。同じ項目をもう一度振ると、最新の結果に更新されます。</p>
 
   <div class="roll-controls">
@@ -353,7 +353,7 @@ footer { text-align:center; color:var(--muted); padding:20px; font-size:.9rem; }
   </div>
 
   <div id="diceLogList" aria-live="polite">
-    <p>まだダイスを振っていません。</p>
+    <p>まだサイコロを振っていません。</p>
   </div>
   <div id="diceLogStatus" class="status" aria-live="polite"></div>
 </section>
@@ -612,7 +612,7 @@ function rollTable(key) {
 
   document.getElementById("diceResult").textContent = text;
 
-  // さいころの結果一覧も更新する
+  // サイコロの結果一覧も更新する
   updateDiceLog(key, text);
 }
 function rollSelection(key){rollTable(key);}
@@ -668,11 +668,11 @@ function clearDiceLog() {
     return;
   }
 
-  if (confirm("さいころの結果一覧をすべて消しますか？")) {
+  if (confirm("サイコロの結果一覧をすべて消しますか？")) {
     Object.keys(diceLog).forEach(key => delete diceLog[key]);
 
     document.getElementById("diceLogList").innerHTML =
-      "<p>まだダイスを振っていません。</p>";
+      "<p>まだサイコロを振っていません。</p>";
 
     document.getElementById("diceLogStatus").textContent =
       "結果一覧をクリアしました。";
@@ -716,7 +716,7 @@ function buildAllTables(){
 
 function insertTemplate(){
   const box=document.getElementById("recordText");
-  const nextNumber=prompt("記録番号を入力してください（例：004）","004");
+  const nextNumber=prompt("記録番号を入力してください（例：001）","001");
   if(nextNumber===null)return;
   box.value=
 `記録${nextNumber}｜タイトル：

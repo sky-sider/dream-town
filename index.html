@@ -32,6 +32,17 @@ header .title-image {
   margin: 0 auto 24px;
   border-radius: 12px;
 }
+
+/* 天気表とサイコロの結果一覧の間に表示する画像 */
+.weather-image {
+  display: block;
+  width: 100%;
+  max-width: 760px;
+  height: auto;
+  margin: 28px auto;
+  border-radius: 12px;
+}
+
 h1 {
   font-size:clamp(2rem,6vw,3.4rem);
   line-height:1.35;
@@ -340,7 +351,14 @@ footer { text-align:center; color:var(--muted); padding:20px; font-size:.9rem; }
     <div class="card"><h3>表B：夢がにじみ出る天気</h3><div id="weatherB"></div></div>
     <div class="card"><h3>表C：町のルールを揺るがす天気</h3><div id="weatherC"></div></div>
   </div>
+
 </section>
+
+<img
+  class="weather-image"
+  src="dream_mayor_image2.png"
+  alt="夢の町でのお茶会を描いたイラスト"
+>
 
 <section id="diceLog">
   <h2>13. サイコロの結果一覧</h2>

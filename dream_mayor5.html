@@ -1,0 +1,800 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ユメナカ小町の町長日誌｜ソロジャーナル</title>
+<style>
+:root {
+  --paper:#fbf8f0; --ink:#383c49; --muted:#777789;
+  --blue:#dceaf0; --blue-dark:#55788a; --pink:#f4e2df;
+  --green:#e5ebdd; --gold:#f3ebcf; --line:#ded9ce;
+  --white:#fffefa;
+}
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:"Yu Gothic","Meiryo",sans-serif;
+  line-height:1.85; overflow-wrap:anywhere;
+}
+header {
+  text-align:center; padding:58px 20px 42px;
+  background:linear-gradient(180deg,#e4edf0,#f5eee4 85%,var(--paper));
+  border-bottom:1px solid var(--line);
+}
+header .eyebrow { letter-spacing:.2em; color:var(--blue-dark); font-size:.85rem; }
+header .title-image {
+  display: block;
+  width: min(100%, 760px);
+  height: auto;
+  margin: 0 auto 24px;
+  border-radius: 12px;
+}
+h1 {
+  font-size:clamp(2rem,6vw,3.4rem);
+  line-height:1.35;
+  margin:.4em 0;
+  color: #55788a;
+}
+header p { max-width:620px; margin:0 auto; }
+main { width:min(100% - 28px,920px); margin:28px auto 80px; }
+section {
+  margin:28px 0; padding:clamp(18px,4vw,32px);
+  background:var(--white); border:1px solid var(--line); border-radius:18px;
+  box-shadow:0 4px 15px #383c4908;
+  scroll-margin-top:18px;
+}
+h2 { font-size:1.5rem; margin:0 0 18px; border-bottom:2px solid var(--blue); padding-bottom:8px; }
+h3 { font-size:1.13rem; margin:24px 0 8px; }
+h4 { margin:16px 0 6px; }
+p { margin:.6em 0 1em; }
+a { color:#496e80; }
+button {
+  cursor:pointer; font:inherit; color:var(--ink); border:1px solid #c8d2d3;
+  border-radius:10px; background:var(--blue); padding:9px 15px;
+}
+button:hover { filter:brightness(.97); }
+button:focus-visible, a:focus-visible, textarea:focus-visible {
+  outline:3px solid #789cac; outline-offset:3px;
+}
+button.primary { background:var(--blue-dark); color:white; border-color:var(--blue-dark); }
+button.soft { background:var(--green); }
+button.small { padding:5px 10px; font-size:.9rem; }
+nav ol { padding-left:1.5em; columns:2; column-gap:28px; }
+nav li { break-inside:avoid; margin:5px 0; }
+.note { background:#f3f0e8; border-radius:10px; padding:12px 15px; }
+.pill { display:inline-block; padding:2px 9px; border-radius:20px; background:var(--gold); font-size:.83rem; }
+.table-wrap { overflow-x:auto; margin:12px 0 20px; }
+table { border-collapse:collapse; width:100%; min-width:480px; font-size:.94rem; }
+th,td { border:1px solid var(--line); padding:9px 10px; text-align:left; vertical-align:top; }
+th { background:#edf2f1; }
+td:first-child,th:first-child { white-space:nowrap; }
+.result {
+  background:#f2f6f5; border:1px solid #d4e0de; border-radius:12px;
+  padding:14px; margin:12px 0; min-height:55px;
+}
+.result strong { color:#3e6878; }
+.roll-controls { display:flex; gap:9px; flex-wrap:wrap; margin:12px 0; }
+.grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
+.card { border:1px solid var(--line); border-radius:12px; padding:14px; background:#fffefa; }
+
+/* 住人図鑑の各項目 */
+.resident-entry {
+  margin: 24px 0 0;
+  padding: 20px;
+  background: #f7f5ee;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+
+.resident-entry > h3 {
+  margin: 0 0 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #d8d6c9;
+  color: var(--blue-dark);
+}
+
+.resident-entry .card {
+  background: var(--white);
+}
+
+@media(max-width:600px) {
+  .resident-entry {
+    padding: 14px;
+  }
+}
+
+.card h3 { margin-top:0; }
+
+#weatherA, #weatherB, #weatherC {
+  white-space: pre-line;
+}
+.record { border-left:4px solid #b7cbd0; padding:8px 0 8px 16px; margin:20px 0; }
+.record h3 { margin-top:0; }
+textarea {
+  display:block; width:100%; min-height:280px; padding:14px;
+  font:inherit; line-height:1.8; border:1px solid #cfcabe; border-radius:10px;
+  background:#fffefa; color:var(--ink); resize:vertical;
+}
+.status { min-height:1.6em; color:#486c59; font-size:.92rem; }
+footer { text-align:center; color:var(--muted); padding:20px; font-size:.9rem; }
+@media(max-width:600px) {
+  nav ol { columns:1; }
+  .grid { grid-template-columns:1fr; }
+  section { padding:17px; }
+  header { padding-top:38px; }
+  table { font-size:.87rem; }
+}
+@media print {
+  body { background:white; }
+  section { box-shadow:none; break-inside:avoid; }
+  button, .roll-controls { display:none; }
+}
+</style>
+</head>
+<body>
+<header>
+  <img class="title-image" src="dream_mayor_image.png" alt="夢の中の小さな町">
+  <div class="eyebrow">SOLO JOURNAL RPG</div>
+  <h1>ユメナカ小町の町長日誌</h1>
+  <p>目を覚ますまで、町はそこにある。<br>
+  不思議な出来事を記録して、夢の中の小さな町を育てていこう。</p>
+</header>
+
+<main>
+<section id="toc">
+  <h2>目次</h2>
+  <nav><ol>
+    <li><a href="#howto">遊び方</a></li>
+    <li><a href="#dice">サイコロの振り方</a></li>
+    <li><a href="#event">出来事表</a></li>
+    <li><a href="#cause">隠された原因表</a></li>
+    <li><a href="#resident">住人図鑑を作る</a></li>
+    <li><a href="#place">場所表</a></li>
+    <li><a href="#item">道具・品物表</a></li>
+    <li><a href="#weather">天気表</a></li>
+    <li><a href="#diceLog">さいころの結果一覧</a></li>
+    <li><a href="#template">記録テンプレート</a></li>
+    <li><a href="#history">町の歴史・未解決の謎</a></li>
+  </ol></nav>
+</section>
+
+<section id="howto">
+  <h2>1. 遊び方</h2>
+ <h3>夢の町へようこそ！</h3>
+  <p>眠るたびに訪れる、不思議な夢の町。<br>
+  そこには個性豊かな住人たちが暮らし、お店が並び、季節がゆっくりと移り変わっていきます。</p>
+
+  <p>けれど、ここは夢の中。<br>
+  昨日まであった道がいつの間にか消えていたり、見慣れた住人がまったく別の姿になっていたり。ありふれた日常のすぐ隣で、ちょっと不思議な出来事が起こります。</p>
+
+  <p>それでも、住人たちは案外平気な顔。驚いたり、笑ったり、ときには不思議なことを当たり前のように受け入れながら、今日もそれぞれの暮らしを営んでいます。</p>
+
+  <p>あなたは、この夢の町の町長です。</p>
+
+  <p>町を歩き、住人と出会い、小さな出来事を記録しながら、少しずつ町を発展させていきましょう。新しいお店ができるかもしれません。見知らぬ誰かが引っ越してくるかもしれません。あるいは、町の片隅に、見たこともない場所がひっそりと現れるかもしれません。</p>
+
+  <p>次に目を覚ましたとき、町がどうなっているかは誰にもわかりません。</p>
+
+  <p><strong>さあ、今夜はどんな町になるのでしょう？</strong></p>
+
+  <p>あなたの夢の町で、今日も小さな物語が始まります。</p>
+  <div class="note">
+    <strong>1回の目安：5〜20分</strong><br>
+    サイコロを振って出来事を決め、町長として記録します。すべての表を毎回使う必要はありません。
+  </div>
+  <h3>基本の進め方</h3>
+  <ol>
+    <li>「今日、町で何が起きた？」の表を2D6で振ります。</li>
+    <li>「その出来事には、何が隠されている？」の表を2D6で振ります。</li>
+    <li>必要なら住人・場所・道具・天気の表を振り、物語に具体的な要素を加えます。</li>
+    <li>町で起きたことを、町長の立場から記録します。</li>
+    <li>新しい場所、住人、町の習慣、歴史、未解決の謎などをひとつ残します。</li>
+  </ol>
+  <h3>記録するときのヒント</h3>
+  <ul>
+    <li>以前の記録は、町の歴史として扱います。</li>
+    <li>過去の記録と矛盾することがあっても、無理に訂正せず「なぜ違うのか」という謎にして構いません。</li>
+    <li>出来事の真相は、必ずしもすべて解明する必要はありません。</li>
+    <li>町長自身の記憶や忘れた願いが関係しても構いませんが、毎回そうする必要はありません。</li>
+    <li>不思議でユーモラスな話、少し切ない話、哲学的な話、どれもこの町の物語です。</li>
+  </ul>
+  <p class="note">大切なのは、正解を当てることではなく、記録を重ねて自分だけの町を育てること。</p>
+</section>
+
+<section id="dice">
+  <h2>2. サイコロの振り方</h2>
+  <p>下のボタンで自動的にサイコロを振れます。物語に必要な表だけを選んで使ってください。</p>
+  <div class="roll-controls">
+    <button class="primary" onclick="rollDice(2)">2D6を振る</button>
+    <button onclick="rollDice(1)">D6を振る</button>
+    <button class="soft" onclick="rollSelection('place')">場所を決める</button>
+    <button class="soft" onclick="rollSelection('item')">道具を決める</button>
+    <button class="soft" onclick="rollSelection('weather')">天気を決める</button>
+  </div>
+  <div id="diceResult" class="result" aria-live="polite">サイコロの結果がここに表示されます。</div>
+  <p>住人の仕事・好きなもの・特徴・秘密は、最初のD6でA/Bを選び、次のD6でその表の1〜6番を選びます。場所と天気はA/B/C、品物はA〜Fを選びます。</p>
+  <p>確率は各表の見出しに記載しています。2D6の表では、合計値によって出やすさが異なります。</p>
+</section>
+
+<section id="event">
+  <h2>3. 出来事表 <span class="pill">2D6・合計2〜12</span></h2>
+  <p>今日、町で何が起きた？　合計値を使って決めます。</p>
+  <div class="roll-controls"><button onclick="rollTable('event')">出来事を振る</button></div>
+  <div id="eventResult" class="result">まだ振っていません。</div>
+  <div class="table-wrap"><table><thead><tr><th>2D6合計</th><th>確率</th><th>出来事</th></tr></thead><tbody id="eventTable"></tbody></table></div>
+</section>
+
+<section id="cause">
+  <h2>4. 隠された原因表 <span class="pill">2D6・合計2〜12</span></h2>
+  <p>その出来事には、何が隠されている？　原因は必ずしも悪意や大きな陰謀である必要はありません。</p>
+  <div class="roll-controls"><button onclick="rollTable('cause')">隠された原因を振る</button></div>
+  <div id="causeResult" class="result">まだ振っていません。</div>
+  <div class="table-wrap"><table><thead><tr><th>2D6合計</th><th>確率</th><th>隠された原因</th></tr></thead><tbody id="causeTable"></tbody></table></div>
+</section>
+
+<section id="resident">
+  <h2>5. 住人図鑑を作る</h2>
+  <p>住人の種族を決め、仕事、好きなもの、不思議な特徴、秘密を組み合わせて、個性豊かな住人を作りましょう。必要な項目だけを選んでも構いません。</p>
+
+  <div class="resident-entry">
+    <h3>住人の種族</h3>
+    <div class="roll-controls">
+      <button onclick="rollTable('species')">住人の種族を振る</button>
+    </div>
+    <div id="speciesResult" class="result">まだ振っていません。</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>D6</th><th>種族</th></tr></thead>
+        <tbody id="speciesTable"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="resident-entry" id="job">
+    <h3>仕事表</h3>
+    <p>最初のD6が1〜3ならA、4〜6ならB。2回目のD6で項目を選びます。</p>
+    <div class="roll-controls">
+      <button onclick="rollTable('job')">仕事を振る</button>
+    </div>
+    <div id="jobResult" class="result">まだ振っていません。</div>
+    <div class="grid">
+      <div class="card"><h4>表A</h4><div id="jobA"></div></div>
+      <div class="card"><h4>表B</h4><div id="jobB"></div></div>
+    </div>
+  </div>
+
+  <div class="resident-entry" id="likes">
+    <h3>好きなもの表</h3>
+    <div class="roll-controls">
+      <button onclick="rollTable('likes')">好きなものを振る</button>
+    </div>
+    <div id="likesResult" class="result">まだ振っていません。</div>
+    <div class="grid">
+      <div class="card"><h4>表A</h4><div id="likesA"></div></div>
+      <div class="card"><h4>表B</h4><div id="likesB"></div></div>
+    </div>
+  </div>
+
+  <div class="resident-entry" id="trait">
+    <h3>不思議な特徴表</h3>
+    <div class="roll-controls">
+      <button onclick="rollTable('trait')">不思議な特徴を振る</button>
+    </div>
+    <div id="traitResult" class="result">まだ振っていません。</div>
+    <div class="grid">
+      <div class="card"><h4>表A</h4><div id="traitA"></div></div>
+      <div class="card"><h4>表B</h4><div id="traitB"></div></div>
+    </div>
+  </div>
+
+  <div class="resident-entry" id="secret">
+    <h3>秘密表</h3>
+    <div class="roll-controls">
+      <button onclick="rollTable('secret')">秘密を振る</button>
+    </div>
+    <div id="secretResult" class="result">まだ振っていません。</div>
+    <div class="grid">
+      <div class="card"><h4>表A</h4><div id="secretA"></div></div>
+      <div class="card"><h4>表B</h4><div id="secretB"></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="place">
+  <h2>10. 場所表 <span class="pill">18項目・各1/18</span></h2>
+  <p>最初のD6で表を選びます。1〜2はA、3〜4はB、5〜6はC。次のD6で項目を選びます。</p>
+  <div class="roll-controls"><button onclick="rollTable('place')">場所を振る</button></div>
+  <div id="placeResult" class="result">まだ振っていません。</div>
+  <div class="grid">
+    <div class="card"><h3>表A：日常の中の不思議</h3><div id="placeA"></div></div>
+    <div class="card"><h3>表B：町のはずれの奇妙な場所</h3><div id="placeB"></div></div>
+    <div class="card"><h3>表C：地図に載っていない場所</h3><div id="placeC"></div></div>
+  </div>
+  <p class="note">「ふしぎな温室」はひとつとは限りません。町のあちこちに存在してもよく、それぞれ違う植物や独自のルールを持つ場所として扱えます。</p>
+</section>
+
+<section id="item">
+  <h2>11. 道具・品物表 <span class="pill">36項目・各1/36</span></h2>
+  <p>最初のD6でA〜Fを選び、次のD6で項目を選びます。</p>
+  <div class="roll-controls"><button onclick="rollTable('item')">道具・品物を振る</button></div>
+  <div id="itemResult" class="result">まだ振っていません。</div>
+  <div class="grid">
+    <div class="card"><h3>表A：不思議な品物</h3><div id="itemA"></div></div>
+    <div class="card"><h3>表B：夢と記憶にまつわる品物</h3><div id="itemB"></div></div>
+    <div class="card"><h3>表C：日常に潜む不思議な品物</h3><div id="itemC"></div></div>
+    <div class="card"><h3>表D：時間と感情にまつわる品物</h3><div id="itemD"></div></div>
+    <div class="card"><h3>表E：自然や生き物にまつわる品物</h3><div id="itemE"></div></div>
+    <div class="card"><h3>表F：町のルールを変える品物</h3><div id="itemF"></div></div>
+  </div>
+</section>
+
+<section id="weather">
+  <h2>12. 天気表 <span class="pill">18項目・各1/18</span></h2>
+  <p>最初のD6でA〜Cを選び、次のD6で項目を選びます。</p>
+  <div class="roll-controls"><button onclick="rollTable('weather')">天気を振る</button></div>
+  <div id="weatherResult" class="result">まだ振っていません。</div>
+  <div class="grid">
+    <div class="card"><h3>表A：日常の天気</h3><div id="weatherA"></div></div>
+    <div class="card"><h3>表B：夢がにじみ出る天気</h3><div id="weatherB"></div></div>
+    <div class="card"><h3>表C：町のルールを揺るがす天気</h3><div id="weatherC"></div></div>
+  </div>
+</section>
+
+<section id="diceLog">
+  <h2>13. さいころの結果一覧</h2>
+  <p>自動で振った項目の結果が、ここに記録されます。同じ項目をもう一度振ると、最新の結果に更新されます。</p>
+
+  <div class="roll-controls">
+    <button class="primary" onclick="copyDiceLog()">結果一覧をコピー</button>
+    <button class="soft" onclick="clearDiceLog()">一覧をクリア</button>
+  </div>
+
+  <div id="diceLogList" aria-live="polite">
+    <p>まだダイスを振っていません。</p>
+  </div>
+  <div id="diceLogStatus" class="status" aria-live="polite"></div>
+</section>
+
+<section id="template">
+  <h2>14. 記録テンプレート</h2>
+  <p>下の文章を自由に編集して使えます。「テンプレートを入れる」を押すと、記録欄にひな形が入ります。書いた内容は、コピーして別のファイルやノートにも保存できます。</p>
+  <div class="roll-controls">
+    <button class="primary" onclick="insertTemplate()">テンプレートを入れる</button>
+    <button onclick="copyRecord()">記録をコピー</button>
+    <button class="soft" onclick="clearRecord()">記録欄を空にする</button>
+  </div>
+  <textarea id="recordText" aria-label="町の記録を書く欄" placeholder="ここに町の記録を書いてください。"></textarea>
+  <div id="copyStatus" class="status" aria-live="polite"></div>
+  <h3>記録の項目</h3>
+  <ul>
+    <li>記録番号・タイトル</li>
+    <li>天気・出来事・隠された原因</li>
+    <li>登場する住人・場所・品物</li>
+    <li>出来事の記録・目撃者の証言</li>
+    <li>町長としての公式な結論</li>
+    <li>町長個人の考えや感想</li>
+    <li>町に新しく加わった設定</li>
+    <li>まだ解けていない謎</li>
+  </ul>
+</section>
+
+<section id="history">
+  <h2>15. 町の歴史・未解決の謎</h2>
+  <p>この欄は、複数の記録にまたがる謎を管理するためのメモです。新しい記録を書く前に読み返すと、過去の出来事を自然に物語へつなげられます。</p>
+  <textarea id="historyText" aria-label="町の歴史と未解決の謎" placeholder="例：温室の青い芽と、記録003の青い花「明日」は関係しているのだろうか。"></textarea>
+  <div class="roll-controls">
+    <button onclick="copyHistory()">歴史メモをコピー</button>
+  </div>
+  <div id="historyStatus" class="status" aria-live="polite"></div>
+  <p class="note">このページは、入力内容を自動保存しません。ブラウザを閉じる前に、記録や歴史メモをコピーして別の場所に保存してください。</p>
+</section>
+</main>
+
+<footer>
+  ―今日も町のどこかで、誰にも説明できないことが起きている。―
+</footer>
+
+<script>
+"use strict";
+
+const DATA = {
+ event: [
+  "町の片隅が、夢から覚めるように消えてしまう",
+  "以前町に住んでいた住人が、何事もなかったように戻ってくる",
+  "知らない建物が現れ、住人たちは「ずっと前からあった」と言う",
+  "見たことのない不思議な生き物が見つかる",
+  "奇妙な噂が町に広がる",
+  "日常の中で小さな異変が起きる",
+  "住人が町長に悩みを相談する",
+  "地図や記録に知らない場所や名前が現れる",
+  "町の決まりや習慣が突然変わる",
+  "複数の住人が、同じ夢を見たと話す",
+  "町全体に大きな変化が起こる"
+ ],
+ cause: [
+  "夢の仕組みそのものに関係している",
+  "町長の記憶や、忘れてしまった願いに関係している",
+  "ある住人が秘密を隠している",
+  "町の古い出来事が現在に影響している",
+  "誰かの善意が思いがけない結果を招いた",
+  "特別な理由はなく、ときどきそういうことが起きる",
+  "誤解や伝達ミスが原因だった",
+  "町の習慣や決まりに、知られていない意味がある",
+  "誰かが今の状態を変えようとしている",
+  "複数の住人が、それぞれ違う理由で関わっている",
+  "真相を知ると、町の住人たちの思い込みが揺らぐ"
+ ],
+ species: [
+  "人間",
+  "動物の住人（フクロウ、猫、キツネなど）",
+  "幻想的な生き物",
+  "植物や自然の住人",
+  "物や道具の住人（時計、椅子、ティーカップなど）",
+  "概念や現象が姿を持った住人（月曜日、ため息、忘れられた約束など）"
+ ],
+ job: [
+  ["夢の修繕師","落とし物収集家（記憶や感情を集める）","天気予報士（天気や住人の気分を予報する）","パン屋（食べると不思議な夢を見るパンを焼く）","図書館司書（まだ誰も読んでいない本を管理する）","雑貨屋の店主"],
+  ["町の庭師（しおれた植物や失われた木を世話する）","地図職人（毎日変わる地図を描く）","夢の配達人","記憶の仕立て屋（記憶を服や装飾品に仕立てる）","夢の観測者（町の異変を記録する）","時計職人（町の時計や止まった時間を扱う）"]
+ ],
+ likes: [
+  ["誰も見つけられない秘密の場所","古い思い出","雨の日","甘いお菓子","小さな生き物","のんびり何もしない時間"],
+  ["誰かとおしゃべりすること","石や切符、葉っぱなどを集めること","新しい場所を探検すること","誰かを助けること","誰かを驚かせること","星や月を眺めること"]
+ ],
+ trait: [
+  ["誰も覚えていないのに、みんなが知り合いだと言う","感情によって体の一部が変化する","夢の中でだけ姿や名前が変わる","その住人がいる場所では時間の流れが変わる","嘘をつくと近くで小さな異変が起こる","本人は普通だと思っているが、周りは不思議がっている"],
+  ["何かを探し続けているが、何を探しているか忘れている","未来を知っているような話し方をする","持ち物に現実には存在しないものが入っている","無意識に他人の感情や記憶へ影響する","眠るたびに町のどこかに新しい道ができる","町の秘密を知っているようだが、本人も説明できない"]
+ ],
+ secret: [
+  ["誰にも言っていない夢や願いがある","かつて受けた親切を、ひそかに返そうとしている","苦手なことを得意だと装っている","人に見せたことのない大切な宝物がある","ある住人に謝りたいが、きっかけを見つけられない","人に隠している奇妙な趣味がある"],
+  ["町に来る前の記憶に空白がある","地図に載っていない場所を訪れたことがある","未来の出来事について妙に詳しい","古い記録に自分と似た名前や姿を見つけた","ある場所に近づくと、いつも同じ夢を見る","この町は夢だと知っている、あるいは信じている"]
+ ],
+ place: [
+  [
+   "古い喫茶店。誰も座らない席がひとつある",
+   "町の図書館。未来の出来事が書かれた本がときどき現れる",
+   "小さな市場。毎日ひとつだけ珍しい品物が並ぶ",
+   "共同菜園。誰も植えていない植物が育つ",
+   "駅や停留所。行き先の表示が見る人によって変わる",
+   "ふしぎな温室。季節外れの花や、夢の中でしか咲かない植物が育つ。温室が複数あってもよく、それぞれ違う植物やルールを持つ"
+  ],
+  [
+   "夜だけ現れ、朝になると消える路地",
+   "失くし物の森。失くした品物や忘れられた約束が落ちている",
+   "小さな浮島。誰かが眠ると高度が変わる",
+   "時間が止まった家。同じ瞬間が繰り返されている",
+   "町のはずれの灯台。海がないのに建っている",
+   "夢の出口。入口はあるが、どこへ続くのか分からない"
+  ],
+  [
+   "雲の上の郵便局。宛先のない手紙や送れなかった返事が保管され、階段は天気によって変わる",
+   "地下の夜市。品物のほか、ため息や昨日見た夢を取引できる",
+   "忘れられた遊園地。乗り物は動かないのに歓声が聞こえ、チケットを持つ人だけが入れる",
+   "扉だらけの家。それぞれ別の場所へ続き、同じ扉でも開くたび行き先が変わることがある",
+   "星を映す池。のぞき込むと、知らない誰かの日常が映る",
+   "ありふれた品物の博物館。普通の品物が、持ち主にとって大切だった理由とともに展示されている"
+  ]
+ ],
+ item: [
+  [
+   "宛先のない手紙。読む人によって文章が変わる",
+   "古い鍵。どの鍵穴に合うのか分からない",
+   "小さなガラス瓶。耳を澄ますと遠くの笑い声が聞こえる",
+   "色あせた写真。写っている人が少しずつ増えていく",
+   "不思議な懐中時計。何かが起こるまでの時間を示す",
+   "手描きの地図。持ち主が探している場所だけが描かれる"
+  ],
+  [
+   "夢の種。植物ではなく、ひとつの場所へ育つ",
+   "記憶の小瓶。開けると誰かの記憶が短い映像のように流れる",
+   "白紙の日記。翌朝になると前日の出来事が書き込まれている",
+   "月のかけら。暗闇の中で、その人が本当に探しているものを照らす",
+   "失くされた影。持ち主から離れ、別の場所で暮らしている",
+   "境界線を引くペン。線の向こう側では別のルールが適用される"
+  ],
+  [
+   "ため息のティーカップ。隠していたため息を小さな生き物として逃がせる",
+   "約束のベル。約束を思い出すと鳴り、忘れると音が小さくなる",
+   "片方だけの靴下。持ち主をもう片方へ導くが、探しているのは靴下とは限らない",
+   "小さな町のスノードーム。中で雪が降り、雪の間は住人たちの行動が少し変わる",
+   "記憶をとかす櫛。忘れていた記憶がよみがえるが、持ち主の記憶とは限らない",
+   "帰り道の紙の船。持ち主が帰りたい場所へ進むが、帰りたい場所が分からないと迷子になる"
+  ],
+  [
+   "花びらの砂時計。最後の花びらが落ちると、誰かの気持ちが変化する",
+   "ぬくもりの封筒。誰かを大切に思った瞬間の温かさを保存できる",
+   "陽気な手鏡。人前で見せている表情ではなく、本当の気持ちを映す",
+   "眠れない人のオルゴール。町で眠れずにいる誰かの夢を奏で、曲が終わるまでその人は眠れない",
+   "感情のホタル瓶。強い感情に反応して光るが、色の意味は分からない",
+   "なくなったカレンダーの一日。誰かが忘れた日を明らかにする"
+  ],
+  [
+   "小さな家に育つどんぐり。小さな住人が引っ越してくることもある",
+   "空を忘れた羽根。放すと飛び去るが、必ず戻ってくる",
+   "寝言を言う石。夜になると、近くの人が忘れたことをつぶやく",
+   "瓶詰めの雨雲。誰かが言えずにいる言葉に反応して雨を降らせる",
+   "夢キノコ。不思議な夢を見せ、翌日その夢の一部が現実に混ざる",
+   "星屑の瓶。中身を放つと、地図にない場所へ導く光が現れる"
+  ],
+  [
+   "縁を切るハサミ。目に見えないつながりも切れるが、切れた縁がどこへ行くかは分からない",
+   "何でも承認するスタンプ。町の決まりに反する申請まで承認してしまう",
+   "どこまでも伸びる小さなはしご。どこへでも届くが、上に何があるかは安全とは限らない",
+   "中身が動く小箱。開け直すと中の品物の位置が変わり、ときには箱自体も移動する",
+   "書き換え鉛筆。書いた出来事を書き換えると、町の現実が少し変わる。消した内容も完全には消えないことがある",
+   "本音のコンパス。持ち主が本当に向き合いたいものを指す。認めたくない気持ちがあると針が回り続ける"
+  ]
+ ],
+ weather: [
+  [
+   "ひだまり日和。\n屋根もベンチも、触れるとほんのり温かい。日なたでうたた寝する住人が増える。",
+   "おしゃべり雨。\n雨粒が地面に当たるたび、小さな声で誰かの噂話をする。耳を澄ませば聞き取れるかもしれない。",
+   "綿あめ雲。\n綿あめのような雲が低いところを漂う。ちぎって食べると、ほんのり懐かしい味がする。",
+   "眠たげな霧。\n町じゅうが薄い霧に包まれる。住人たちは普段より少しぼんやりして、名前や用事を忘れがちになる。",
+   "いたずら風。\n帽子や洗濯物だけでなく、看板や小さな家具までふわりと動かす。風には何か言いたいことがあるらしい。",
+   "シャボン玉雨。\n空から小さなシャボン玉が降ってくる。触れると弾け、その人が最近見た夢の一場面が一瞬だけ映る。"
+  ],
+  [
+   "流れ星の雨。\n空から小さな星が降ってくる。拾った星は、持ち主が今夜見る夢をひとつだけ照らしてくれる。",
+   "逆さ雨。\n地面の水たまりから雨粒が空へ昇っていく。濡れた地面は、雨が降る前より乾いている。",
+   "虹の道。\n町の道に沿って虹が架かる。その上を歩くと、普段なら行けない場所へたどり着くことがある。",
+   "月明かりの昼。\n昼なのに月が空に浮かび、町全体が青白く照らされる。住人は普段は隠している本音を口にしやすくなる。",
+   "羽根雪。\n羽毛のように軽い雪が降る。積もっても冷たくなく、触れた人の心を少しだけ軽くする。",
+   "音符の風。\n風に乗って音符が漂う。耳を澄ますと、誰かが口に出せなかった言葉がメロディーになって聞こえる。"
+  ],
+  [
+   "花びら嵐。\nどこからともなく花びらが吹き荒れる。花びらには、町の誰かが胸にしまった言葉が一文字ずつ書かれている。",
+   "夢の泡。\n空中に大小さまざまな泡が浮かぶ。泡を割ると、誰かが見た夢や、忘れてしまった夢の断片が現れる。",
+   "記憶の雨。\n雨粒が触れたものに、古い記憶がよみがえる。建物がかつての姿に戻ったり、住人が昔の知り合いを思い出したりする。",
+   "影迷いの天気。\n影が持ち主とは別の方向へ歩き出す。影たちは、持ち主が行くのをためらっている場所へ向かうことがある。",
+   "夢色のオーロラ。\n空に見たことのない色の光が揺れる。その光を見上げると、今まで考えたことのなかった願いが心に浮かぶ。",
+   "ランタンの雨。\n空から小さな灯籠が降ってくる。灯籠には町の誰かが待っている人の名前が書かれているが、本人にも理由はわからない。"
+  ]
+ ]
+};
+
+const PROB2D6 = {
+  2:"1/36（約2.78%）",3:"2/36（約5.56%）",
+  4:"3/36（約8.33%）",5:"4/36（約11.11%）",
+  6:"5/36（約13.89%）",7:"6/36（約16.67%）",
+  8:"5/36（約13.89%）",9:"4/36（約11.11%）",
+  10:"3/36（約8.33%）",11:"2/36（約5.56%）",
+  12:"1/36（約2.78%）"
+};
+
+function makeRows(items, target, start=1) {
+  const el = document.getElementById(target);
+  if (!el) return;
+  el.innerHTML = items.map((v,i)=>
+    `<tr><td>${i+start}</td><td>${escapeHTML(v)}</td></tr>`
+  ).join("");
+}
+function makeTable(items, target) {
+  const el=document.getElementById(target);
+  if(!el)return;
+  el.innerHTML="<ol>"+items.map(v=>"<li>"+escapeHTML(v)+"</li>").join("")+"</ol>";
+}
+function escapeHTML(value) {
+  return String(value).replace(/[&<>"']/g, c => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  }[c]));
+}
+function d6(){return Math.floor(Math.random()*6)+1;}
+function rollDice(n) {
+  const rolls=Array.from({length:n},d6);
+  const sum=rolls.reduce((a,b)=>a+b,0);
+  document.getElementById("diceResult").innerHTML =
+    `<strong>${n===1?"D6":"2D6"}</strong>：${rolls.join(" ＋ ")}${n===2?" ＝ "+sum:""}。`;
+}
+function twoD6(){const a=d6(),b=d6();return {a,b,sum:a+b};}
+
+function rollTable(key) {
+  let text="";
+  if(key==="event"||key==="cause"){
+    const r=twoD6(), item=DATA[key][r.sum-2];
+    text=`2D6：${r.a}＋${r.b}＝${r.sum}。${item}（確率 ${PROB2D6[r.sum]}）`;
+  } else if(key==="species"){
+    const n=d6(); text=`D6：${n}。${DATA.species[n-1]}（確率 1/6）`;
+  } else if(["job","likes","trait","secret"].includes(key)){
+    const first=d6(), second=d6(), group=first<=3?0:1;
+    text=`最初のD6：${first} → 表${group===0?"A":"B"}。次のD6：${second}。${DATA[key][group][second-1]}（確率 1/12）`;
+  } else if(key==="place"||key==="weather"){
+    const first=d6(),second=d6(),group=Math.floor((first-1)/2);
+    text=`最初のD6：${first} → 表${"ABC"[group]}。次のD6：${second}。${DATA[key][group][second-1]}（確率 1/18）`;
+  } else if(key==="item"){
+    const first=d6(),second=d6(),group=first-1;
+    text=`最初のD6：${first} → 表${"ABCDEF"[group]}。次のD6：${second}。${DATA.item[group][second-1]}（確率 1/36）`;
+  }
+    const result = document.getElementById(key + "Result");
+  if (result) result.textContent = text;
+
+  document.getElementById("diceResult").textContent = text;
+
+  // さいころの結果一覧も更新する
+  updateDiceLog(key, text);
+}
+function rollSelection(key){rollTable(key);}
+
+
+const diceLog = {};
+
+const DICE_LABELS = {
+  event: "出来事",
+  cause: "隠された原因",
+  species: "住人の種族",
+  job: "住人の仕事",
+  likes: "好きなもの",
+  trait: "不思議な特徴",
+  secret: "住人の秘密",
+  place: "場所",
+  item: "道具・品物",
+  weather: "天気"
+};
+
+function updateDiceLog(key, text) {
+  // 出た数字や確率を除き、説明文だけを取り出す
+  let description = text;
+
+  if (key === "event" || key === "cause") {
+    description = text.replace(/^2D6：.*?。/, "")
+                       .replace(/（確率 .*?）$/, "");
+  } else if (key === "species") {
+    description = text.replace(/^D6：.*?。/, "")
+                       .replace(/（確率 .*?）$/, "");
+  } else {
+    description = text.replace(/^最初のD6：.*?。次のD6：.*?。/, "")
+                       .replace(/（確率 .*?）$/, "");
+  }
+
+  // 同じ項目があれば最新の説明文に更新
+  diceLog[key] = description;
+
+  const list = document.getElementById("diceLogList");
+
+  list.innerHTML = Object.keys(diceLog).map(key => `
+    <div class="card" style="margin-bottom:12px;">
+      <h3>${escapeHTML(DICE_LABELS[key])}</h3>
+      <p style="white-space:pre-line;">${escapeHTML(diceLog[key])}</p>
+    </div>
+  `).join("");
+}
+
+function clearDiceLog() {
+  if (!Object.keys(diceLog).length) {
+    document.getElementById("diceLogStatus").textContent =
+      "一覧はすでに空です。";
+    return;
+  }
+
+  if (confirm("さいころの結果一覧をすべて消しますか？")) {
+    Object.keys(diceLog).forEach(key => delete diceLog[key]);
+
+    document.getElementById("diceLogList").innerHTML =
+      "<p>まだダイスを振っていません。</p>";
+
+    document.getElementById("diceLogStatus").textContent =
+      "結果一覧をクリアしました。";
+  }
+}
+
+function copyDiceLog() {
+  const text = Object.keys(diceLog).map(key =>
+    `【${DICE_LABELS[key]}】\n${diceLog[key]}`
+  ).join("\n\n");
+
+  copyText(text, "diceLogStatus");
+}
+
+function buildAllTables(){
+  for(let i=0;i<11;i++){
+    const sum=i+2;
+    const tr=document.createElement("tr");
+    tr.innerHTML=`<td>${sum}</td><td>${PROB2D6[sum]}</td><td>${escapeHTML(DATA.event[i])}</td>`;
+    document.getElementById("eventTable").appendChild(tr);
+    const tr2=document.createElement("tr");
+    tr2.innerHTML=`<td>${sum}</td><td>${PROB2D6[sum]}</td><td>${escapeHTML(DATA.cause[i])}</td>`;
+    document.getElementById("causeTable").appendChild(tr2);
+  }
+  makeRows(DATA.species,"speciesTable");
+  ["job","likes","trait","secret"].forEach(key=>{
+    makeTable(DATA[key][0],key+"A");
+    makeTable(DATA[key][1],key+"B");
+  });
+  ["place","weather"].forEach(key=>{
+    ["A","B","C"].forEach((letter,i)=>makeTable(DATA[key][i],key+letter));
+  });
+  ["A","B","C","D","E","F"].forEach((letter,i)=>makeTable(DATA.item[i],"item"+letter));
+}
+
+function insertTemplate(){
+  const box=document.getElementById("recordText");
+  const nextNumber=prompt("記録番号を入力してください（例：004）","004");
+  if(nextNumber===null)return;
+  box.value=
+`記録${nextNumber}｜タイトル：
+
+【天気】
+【出来事】
+【隠された原因】
+
+【住人】
+種族：
+名前：
+仕事：
+好きなもの：
+不思議な特徴：
+秘密：
+
+【場所】
+【品物】
+
+■ 出来事の記録
+何が起きたのか：
+
+■ 目撃者の証言・町の様子
+誰が何を見たのか：
+住人たちの反応：
+
+■ 町長としての公式な結論
+分かったこと：
+今後調べること：
+
+■ 町長個人の考え・感想
+気になったこと：
+自分の記憶や願いとの関係：
+
+■ 町に新しく加わった設定
+新しい場所・住人・習慣・歴史など：
+
+■ 未解決の謎
+・
+・
+・
+
+`;
+  box.focus();
+  document.getElementById("copyStatus").textContent="テンプレートを入れました。自由に編集してください。";
+}
+async function copyText(text, statusId){
+  const status=document.getElementById(statusId);
+  if(!text.trim()){
+    status.textContent="コピーする内容がありません。";
+    return;
+  }
+  try{
+    if(navigator.clipboard && window.isSecureContext){
+      await navigator.clipboard.writeText(text);
+    } else {
+      const helper=document.createElement("textarea");
+      helper.value=text;
+      helper.style.position="fixed";
+      helper.style.left="-9999px";
+      document.body.appendChild(helper);
+      helper.focus(); helper.select();
+      const ok=document.execCommand("copy");
+      helper.remove();
+      if(!ok)throw new Error("copy failed");
+    }
+    status.textContent="コピーしました。別の場所に貼り付けて保存してください。";
+  }catch(e){
+    status.textContent="自動コピーできませんでした。入力欄を選択して Ctrl+C でコピーしてください。";
+  }
+}
+function copyRecord(){
+  copyText(document.getElementById("recordText").value,"copyStatus");
+}
+function copyHistory(){
+  copyText(document.getElementById("historyText").value,"historyStatus");
+}
+function clearRecord(){
+  if(confirm("記録欄の内容を消しますか？保存していない文章は失われます。")){
+    document.getElementById("recordText").value="";
+    document.getElementById("copyStatus").textContent="記録欄を空にしました。";
+  }
+}
+buildAllTables();
+</script>
+</body>
+</html>

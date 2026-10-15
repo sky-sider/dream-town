@@ -221,9 +221,8 @@ footer { text-align:center; color:var(--muted); padding:20px; font-size:.9rem; }
   <div class="roll-controls">
     <button class="primary" onclick="rollDice(2)">2D6を振る</button>
     <button onclick="rollDice(1)">D6を振る</button>
-    <button class="soft" onclick="rollSelection('place')">場所を決める</button>
-    <button class="soft" onclick="rollSelection('item')">道具を決める</button>
-    <button class="soft" onclick="rollSelection('weather')">天気を決める</button>
+    <button class="soft" onclick="rollTable('event')">出来事を決める</button>
+    <button class="soft" onclick="rollTable('cause')">隠された原因を決める</button>
   </div>
   <div id="diceResult" class="result" aria-live="polite">サイコロの結果がここに表示されます。</div>
   <p>住人の仕事・好きなもの・特徴・秘密は、最初のD6でA/Bを選び、次のD6でその表の1〜6番を選びます。場所と天気はA/B/C、品物はA〜Fを選びます。</p>
